@@ -3,7 +3,7 @@ export type Language = 'fr' | 'en' | 'ar' | 'es' | 'pt' | 'de';
 export const translations = {
   fr: {
     header: {
-      title: "Smart Clinic OS",
+      title: "CRM Booking System",
       subtitle: "Medical CRM",
       nav_features: "Fonctionnalités",
       nav_demo: "Démo",
@@ -52,11 +52,11 @@ export const translations = {
       section_title: "Avis des Utilisateurs"
     },
     footer: {
-      copyright: "&copy; 2026 Smart Clinic OS. Made with ❤️ for healthcare professionals."
+      copyright: "&copy; 2026 CRM Booking System. Made with ❤️ for healthcare professionals."
     }
   },
   en: {
-    header: { title: "Smart Clinic OS", subtitle: "Medical CRM", nav_features: "Features", nav_demo: "Demo", nav_pricing: "Pricing", nav_cta: "Try Free" },
+    header: { title: "CRM Booking System", subtitle: "Medical CRM", nav_features: "Features", nav_demo: "Demo", nav_pricing: "Pricing", nav_cta: "Try Free" },
     hero: { 
       badge: "For healthcare professionals", 
       title: "Medical Clinic Management", 
@@ -86,10 +86,10 @@ export const translations = {
     demo: { section_title: "See It In Action", description: "The interactive demo below shows the complete system flow. Click buttons to navigate." },
     pricing: { section_title: "Simple Pricing", starter: "Starter", pro: "Pro", enterprise: "Enterprise", price_free: "€0", button_start: "Start" },
     testimonials: { section_title: "User Reviews" },
-    footer: { copyright: "&copy; 2026 Smart Clinic OS. Made with ❤️ for healthcare professionals." }
+    footer: { copyright: "&copy; 2026 CRM Booking System. Made with ❤️ for healthcare professionals." }
   },
   ar: {
-    header: { title: "نظام العيادة الذكي", subtitle: "إدارة علاقات المرضى", nav_features: "الميزات", nav_demo: "تجريب", nav_pricing: "الأسعار", nav_cta: "جرب مجاناً" },
+    header: { title: "CRM Booking System", subtitle: "إدارة علاقات المرضى", nav_features: "الميزات", nav_demo: "تجريب", nav_pricing: "الأسعار", nav_cta: "جرب مجاناً" },
     hero: { 
       badge: "للمحترفين في الرعاية الصحية", 
       title: "إدارة العيادة الطبية", 
@@ -119,10 +119,10 @@ export const translations = {
     demo: { section_title: "شاهده في الواقع", description: "يوضح العرض التجريبي التفاعلي أدناه تدفق النظام بالكامل. انقر على الأزرار للتنقل." },
     pricing: { section_title: "تسعير بسيط", starter: "مبتدئ", pro: "محترف", enterprise: "مؤسسة", price_free: "0 يورو", button_start: "ابدأ" },
     testimonials: { section_title: "آراء المستخدمين" },
-    footer: { copyright: "&copy; 2026 نظام العيادة الذكي. تم تقديمه بكل حب ❤️ لمخصصي الرعاية الصحية." }
+    footer: { copyright: "&copy; 2026 CRM Booking System. تم تقديمه بكل حب ❤️ لمخصصي الرعاية الصحية." }
   },
   es: {
-    header: { title: "Smart Clinic OS", subtitle: "CRM Médico", nav_features: "Características", nav_demo: "Demo", nav_pricing: "Precios", nav_cta: "Probar Gratis" },
+    header: { title: "CRM Booking System", subtitle: "CRM Médico", nav_features: "Características", nav_demo: "Demo", nav_pricing: "Precios", nav_cta: "Probar Gratis" },
     hero: { 
       badge: "Para profesionales de la salud", 
       title: "Gestión de Clínica Médica", 
@@ -133,10 +133,10 @@ export const translations = {
     demo: { section_title: "Ver en Acción" },
     pricing: { section_title: "Precios Simples" },
     testimonials: { section_title: "Opiniones" },
-    footer: { copyright: "&copy; 2026 Smart Clinic OS" }
+    footer: { copyright: "&copy; 2026 CRM Booking System" }
   },
   pt: {
-    header: { title: "Smart Clinic OS", subtitle: "CRM Médico", nav_features: "Recursos", nav_demo: "Demo", nav_pricing: "Preços", nav_cta: "Testar Grátis" },
+    header: { title: "CRM Booking System", subtitle: "CRM Médico", nav_features: "Recursos", nav_demo: "Demo", nav_pricing: "Preços", nav_cta: "Testar Grátis" },
     hero: { 
       badge: "Para profissionais de saúde", 
       title: "Gerenciamento de Clínica Médica", 
@@ -147,10 +147,10 @@ export const translations = {
     demo: { section_title: "Ver em Ação" },
     pricing: { section_title: "Preços Simples" },
     testimonials: { section_title: "Avaliações" },
-    footer: { copyright: "&copy; 2026 Smart Clinic OS" }
+    footer: { copyright: "&copy; 2026 CRM Booking System" }
   },
   de: {
-    header: { title: "Smart Clinic OS", subtitle: "Medizinisches CRM", nav_features: "Funktionen", nav_demo: "Demo", nav_pricing: "Preise", nav_cta: "Gratis Testen" },
+    header: { title: "CRM Booking System", subtitle: "Medizinisches CRM", nav_features: "Funktionen", nav_demo: "Demo", nav_pricing: "Preise", nav_cta: "Gratis Testen" },
     hero: { 
       badge: "Für Gesundheitsfachleute", 
       title: "Verwaltung Medizinischer Kliniken", 
@@ -161,6 +161,6 @@ export const translations = {
     demo: { section_title: "In Aktion sehen" },
     pricing: { section_title: "Einfache Preise" },
     testimonials: { section_title: "Bewertungen" },
-    footer: { copyright: "&copy; 2026 Smart Clinic OS" }
+    footer: { copyright: "&copy; 2026 CRM Booking System" }
   }
 };

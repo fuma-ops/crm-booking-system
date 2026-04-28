@@ -64,7 +64,7 @@ export const ArticlePage = () => {
             <HeartPulse className="w-6 h-6 text-white" />
           </Link>
           <div className="flex-1">
-             <Link to="/" className="text-xl font-black tracking-tight leading-none hover:text-[#148f77] transition-colors">Smart Clinic OS</Link>
+             <Link to="/" className="text-xl font-black tracking-tight leading-none hover:text-[#148f77] transition-colors">CRM Booking System</Link>
           </div>
           <Link to="/" className="flex items-center gap-2 text-sm font-bold text-slate-600 hover:text-[#148f77] transition-colors">
             <ArrowLeft className="w-4 h-4" /> Back to Home
@@ -191,7 +191,7 @@ export const ArticlePage = () => {
 
       {/* Footer */}
       <footer className="py-12 bg-[#0d1b2a] text-center text-slate-400 text-sm">
-        <p>&copy; 2026 Smart Clinic OS. All Rights Reserved.</p>
+        <p>&copy; 2026 CRM Booking System. All Rights Reserved.</p>
       </footer>
     </div>
   );

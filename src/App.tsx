@@ -243,7 +243,7 @@ const LandingPage = () => {
   return (
     <div className="relative min-h-screen bg-transparent text-slate-900 font-sans selection:bg-[#148f77]/20 selection:text-[#148f77]">
       <Helmet>
-        <title>SMRT CRM BOOKING SYSTEM</title>
+        <title>CRM Booking System</title>
         <meta name="description" content="Production-ready medical CRM landing page with interactive demo and multi-language support." />
       </Helmet>
       <FloatingCrosses />
@@ -503,7 +503,7 @@ const LandingPage = () => {
         <section className="w-full bg-white/70 backdrop-blur-xl rounded-[3rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white/50 py-16 md:py-24 lg:py-[100px] px-6 md:px-10 max-w-7xl mx-auto relative overflow-hidden">
           <h2 className="text-4xl lg:text-5xl font-black mb-16 text-center">{t.testimonials.section_title}</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <TestimonialCard name="Dr. Sarah L." role="Dermatologist" text="Smart Clinic OS has completely transformed how we manage our queue and patient records." />
+            <TestimonialCard name="Dr. Sarah L." role="Dermatologist" text="CRM Booking System has completely transformed how we manage our queue and patient records." />
             <TestimonialCard name="Jean M." role="Clinic Manager" text="The ROI is incredible. Zero monthly fees and complete control over our medical data." />
             <TestimonialCard name="Dr. Antoine P." role="General Practitioner" text="The automated reminders reduced our no-show rate by 45%. Highly recommended." />
             <TestimonialCard name="Maria V." role="Secretary" text="Simplest software I've used. Integration with Google Sheets is brilliant for reporting." />
@@ -712,7 +712,7 @@ const LandingPage = () => {
                 <p className="text-slate-400 font-medium">
                   {t.footer.copyright}
                 </p>
-                <p className="text-sm text-slate-500 mt-1">All Rights Reserved. Created by the Smart Clinic OS Team.</p>
+                <p className="text-sm text-slate-500 mt-1">All Rights Reserved. Created by the CRM Booking System Team.</p>
               </div>
               <div className="flex gap-4">
                  <a href="#" className="w-10 h-10 rounded-full bg-slate-800/50 flex items-center justify-center hover:bg-[#148f77] hover:text-white transition-colors text-slate-400">
