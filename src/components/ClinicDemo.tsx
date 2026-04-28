@@ -11,18 +11,18 @@ import { useTranslation } from '../i18n/LanguageContext';
 const BRAND_COLOR = "bg-[#148f77]";
 const TEXT_BRAND = "text-[#148f77]";
 
-const SCENES = [
-  { id: 'dashboard', title: 'Clinic Overview', icon: BarChart3, color: BRAND_COLOR },
-  { id: 'projects', title: 'My Projects', icon: Layout, color: BRAND_COLOR },
-  { id: 'appointments', title: 'Appointments', icon: Calendar, color: BRAND_COLOR },
-  { id: 'create_form', title: 'Create Form', icon: Plus, color: BRAND_COLOR },
-  { id: 'users', title: 'Users & Access', icon: Users, color: BRAND_COLOR }
-];
-
 export const ClinicDemo: React.FC = () => {
   const { t, isRTL } = useTranslation();
   const [activeScene, setActiveScene] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+
+  const SCENES = [
+    { id: 'dashboard', title: t.demo_labels.dashboard, icon: BarChart3, color: BRAND_COLOR },
+    { id: 'projects', title: t.demo_labels.projects, icon: Layout, color: BRAND_COLOR },
+    { id: 'appointments', title: t.demo_labels.appointments, icon: Calendar, color: BRAND_COLOR },
+    { id: 'create_form', title: t.demo_labels.create_form, icon: Plus, color: BRAND_COLOR },
+    { id: 'users', title: t.demo_labels.users, icon: Users, color: BRAND_COLOR }
+  ];
 
   useEffect(() => {
     if (isPaused) return;
@@ -59,7 +59,7 @@ export const ClinicDemo: React.FC = () => {
                     {scene.title}
                   </h3>
                   <p className="text-xs font-bold uppercase tracking-widest opacity-70 mt-1">
-                    {activeScene === idx ? "Live Preview" : "Click to view"}
+                    {activeScene === idx ? "Live" : t.demo_labels.open}
                   </p>
                 </div>
                 <div className="ms-auto flex-shrink-0">
@@ -84,30 +84,30 @@ export const ClinicDemo: React.FC = () => {
               {/* Sidebar */}
               <div className="w-16 md:w-48 bg-white border-r border-slate-200 flex flex-col py-4 shrink-0 transition-all duration-300 z-20">
                 <div className="px-2 md:px-4 mb-4 md:mb-8 flex items-center justify-center md:justify-start gap-2">
-                  <div className="w-8 h-8 rounded-full bg-teal-50 flex items-center justify-center shrink-0 text-[#148f77]">
-                    <Plus className="w-5 h-5 font-bold" />
+                  <div className="w-10 h-10 rounded-xl overflow-hidden shadow-md">
+                    <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&q=80&w=100" alt="Logo" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
                   </div>
                   <span className="font-bold text-[#148f77] leading-tight text-sm hidden md:block">Clinic CRM<br/>System</span>
                 </div>
                 
                 <div className="px-2 md:px-4 mb-4 hidden md:block">
                   <div className="flex items-center gap-2 text-xs font-medium text-slate-500">
-                    <User className="w-4 h-4" /> Utilisateur
+                    <User className="w-4 h-4" /> Admin
                   </div>
                 </div>
 
                 <nav className="flex-1 space-y-1.5 px-2 md:px-3 mt-4 md:mt-0">
-                  <SidebarItem icon={BarChart3} label="Dashboard" active={activeScene === 0} />
-                  <SidebarItem icon={Layout} label="My Projects" active={activeScene === 1} />
-                  <SidebarItem icon={Calendar} label="Appointments" active={activeScene === 2} />
-                  <SidebarItem icon={Plus} label="Create Form" active={activeScene === 3} />
-                  <SidebarItem icon={Users} label="Users & Access" active={activeScene === 4} />
-                  <SidebarItem icon={Settings} label="Settings" active={false} />
+                  <SidebarItem icon={BarChart3} label={t.demo_labels.dashboard} active={activeScene === 0} />
+                  <SidebarItem icon={Layout} label={t.demo_labels.projects} active={activeScene === 1} />
+                  <SidebarItem icon={Calendar} label={t.demo_labels.appointments} active={activeScene === 2} />
+                  <SidebarItem icon={Plus} label={t.demo_labels.create_form} active={activeScene === 3} />
+                  <SidebarItem icon={Users} label={t.demo_labels.users} active={activeScene === 4} />
+                  <SidebarItem icon={Settings} label={t.demo_labels.settings} active={false} />
                 </nav>
 
                 <div className="px-4 mt-auto border-t border-slate-100 pt-3">
                    <div className="flex items-center gap-2 text-xs font-medium text-red-500 cursor-pointer py-2 px-2 hover:bg-red-50 rounded-lg">
-                      <ArrowRight className="w-4 h-4 rotate-180" /> Logout
+                      <ArrowRight className="w-4 h-4 rotate-180" /> {t.demo_labels.logout}
                    </div>
                 </div>
               </div>
@@ -169,33 +169,35 @@ const SidebarItem = ({ icon: Icon, label, active }: any) => (
 );
 
 // SCENE 0: DASHBOARD
-const DashboardScene = () => (
-  <div className="flex flex-col h-full gap-6">
-    <div className="flex items-center gap-3 text-[#148f77] font-black text-xl mb-2">
+const DashboardScene = () => {
+  const { t } = useTranslation();
+  return (
+    <div className="flex flex-col h-full gap-6" dir="ltr">
+      <div className="flex items-center gap-3 text-[#148f77] font-black text-xl mb-2">
       <Plus className="w-6 h-6 border-2 border-[#148f77] rounded flex items-center justify-center p-0.5" />
-      <h2>Clinic Overview</h2>
+      <h2>{t.demo_labels.overview}</h2>
     </div>
 
     <div className="grid grid-cols-3 gap-4">
       {/* Top Cards */}
       <div className="bg-white rounded-xl shadow-sm border-t-4 border-[#148f77] p-5">
-        <h3 className="text-[10px] font-bold text-slate-500 tracking-wider uppercase mb-2">Today's Appointments</h3>
-        <p className="text-3xl font-black text-slate-800">2</p>
+        <h3 className="text-[10px] font-bold text-slate-500 tracking-wider uppercase mb-2">{t.demo_labels.today_appointments}</h3>
+        <p className="text-3xl font-black text-slate-800">12</p>
       </div>
       <div className="bg-white rounded-xl shadow-sm border-t-4 border-yellow-400 p-5">
-        <h3 className="text-[10px] font-bold text-slate-500 tracking-wider uppercase mb-2">Pending Approvals</h3>
-        <p className="text-3xl font-black text-slate-800">3</p>
+        <h3 className="text-[10px] font-bold text-slate-500 tracking-wider uppercase mb-2">{t.demo_labels.pending_approvals}</h3>
+        <p className="text-3xl font-black text-slate-800">5</p>
       </div>
       <div className="bg-white rounded-xl shadow-sm border-t-4 border-purple-500 p-5">
-        <h3 className="text-[10px] font-bold text-slate-500 tracking-wider uppercase mb-2">Satisfaction Rating</h3>
-        <p className="text-3xl font-black text-slate-800">2.0 <span className="text-sm font-medium text-slate-400">/ 5</span></p>
+        <h3 className="text-[10px] font-bold text-slate-500 tracking-wider uppercase mb-2">{t.demo_labels.satisfaction}</h3>
+        <p className="text-3xl font-black text-slate-800">4.8 <span className="text-sm font-medium text-slate-400">/ 5</span></p>
       </div>
     </div>
 
     <div className="grid grid-cols-3 gap-4">
       <div className="col-span-2 bg-white rounded-xl shadow-sm p-5 border border-slate-100">
         <div className="flex items-center gap-3 mb-6">
-          <h3 className="font-bold text-slate-800">Weekly Performance</h3>
+          <h3 className="font-bold text-slate-800">{t.demo_labels.performance}</h3>
           <span className="bg-[#eef6f1] text-[#148f77] text-xs font-bold px-2 py-0.5 rounded-full">22/04/2026</span>
         </div>
         <div className="h-40 flex items-end justify-between px-4 pb-2">
@@ -222,7 +224,7 @@ const DashboardScene = () => (
 
       <div className="col-span-1 bg-white rounded-xl shadow-sm p-5 border border-slate-100 flex flex-col">
         <div className="flex justify-between items-center mb-4">
-          <h3 className="font-bold text-slate-800">Today's Agenda</h3>
+          <h3 className="font-bold text-slate-800">{t.demo_labels.agenda}</h3>
           <span className="bg-blue-50 text-blue-500 text-[10px] font-black px-2 py-0.5 rounded-full uppercase">Live</span>
         </div>
         <div className="flex-1 space-y-3">
@@ -257,16 +259,19 @@ const DashboardScene = () => (
     </div>
   </div>
 );
+};
 
 // SCENE 1: MY PROJECTS (FORMS)
-const ProjectsScene = () => (
-  <div className="flex flex-col h-full gap-6">
-    <div className="flex justify-between items-center bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
+const ProjectsScene = () => {
+  const { t } = useTranslation();
+  return (
+    <div className="flex flex-col h-full gap-6" dir="ltr">
+      <div className="flex justify-between items-center bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
       <div className="flex items-center gap-3">
-        <h2 className="text-xl font-black text-[#148f77]">My Forms</h2>
+        <h2 className="text-xl font-black text-[#148f77]">{t.demo_labels.projects}</h2>
       </div>
       <div className="flex items-center gap-2 bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-full text-slate-400 text-sm w-48">
-        <Search className="w-4 h-4" /> <span>Search...</span>
+        <Search className="w-4 h-4" /> <span>{t.demo_labels.search}</span>
       </div>
     </div>
 
@@ -294,12 +299,12 @@ const ProjectsScene = () => (
           </h3>
           
           <button className="w-full bg-[#148f77] text-white font-bold text-sm py-2 rounded-full mt-2 mb-1">
-            Open
+            {t.demo_labels.open}
           </button>
           
           <div className="flex items-center justify-between border-t border-slate-100 pt-3 px-1 mt-1">
             <div className="flex items-center gap-1.5 text-slate-400 text-xs font-bold cursor-pointer hover:text-slate-600 bg-slate-50 px-3 py-1 rounded-full border border-slate-100">
-               <Edit2 className="w-3 h-3" /> Edit
+               <Edit2 className="w-3 h-3" /> {t.demo_labels.edit}
             </div>
             <div className="flex items-center gap-2">
               <div className="bg-blue-50 text-blue-500 p-1 rounded-sm"><Copy className="w-3 h-3" /></div>
@@ -312,14 +317,17 @@ const ProjectsScene = () => (
     </div>
   </div>
 );
+};
 
 // SCENE 2: APPOINTMENTS
-const AppointmentsScene = () => (
-  <div className="flex flex-col h-full gap-4">
-    <div className="flex justify-between items-center bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
+const AppointmentsScene = () => {
+  const { t } = useTranslation();
+  return (
+    <div className="flex flex-col h-full gap-4" dir="ltr">
+      <div className="flex justify-between items-center bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
       <div className="flex items-center gap-3">
         <Calendar className="w-6 h-6 text-[#148f77]" />
-        <h2 className="text-xl font-black text-[#148f77]">Appointments</h2>
+        <h2 className="text-xl font-black text-[#148f77]">{t.demo_labels.appointments}</h2>
       </div>
       <div className="bg-slate-50 border border-slate-200 rounded-full px-4 py-1.5 flex items-center gap-2">
          <Search className="w-3 h-3 text-slate-400" />
@@ -338,16 +346,16 @@ const AppointmentsScene = () => (
              <div className="w-3 h-3 border border-slate-300 rounded-sm bg-white" />
              <span className="text-xs font-bold text-slate-600">Select All</span>
           </div>
-          <button className="bg-green-100 border border-green-200 text-green-700 text-xs font-bold px-3 py-1.5 rounded-full shadow-sm whitespace-nowrap">Confirm ( 0 )</button>
-          <button className="bg-orange-100 border border-orange-200 text-orange-700 text-xs font-bold px-3 py-1.5 rounded-full shadow-sm whitespace-nowrap">Cancel ( 0 )</button>
-          <button className="bg-red-100 border border-red-200 text-red-700 text-xs font-bold px-3 py-1.5 rounded-full shadow-sm whitespace-nowrap">Delete ( 0 )</button>
+          <button className="bg-green-100 border border-green-200 text-green-700 text-xs font-bold px-3 py-1.5 rounded-full shadow-sm whitespace-nowrap">{t.demo_labels.confirm} ( 0 )</button>
+          <button className="bg-orange-100 border border-orange-200 text-orange-700 text-xs font-bold px-3 py-1.5 rounded-full shadow-sm whitespace-nowrap">{t.demo_labels.cancel} ( 0 )</button>
+          <button className="bg-red-100 border border-red-200 text-red-700 text-xs font-bold px-3 py-1.5 rounded-full shadow-sm whitespace-nowrap">{t.demo_labels.delete} ( 0 )</button>
         </div>
         
         {/* Filters */}
         <div className="flex gap-2 bg-white rounded-full p-1 border border-slate-200 w-fit overflow-x-auto">
           <button className="bg-slate-800 text-white text-xs font-bold px-4 py-1.5 rounded-full">All</button>
-          <button className="text-slate-500 hover:text-slate-800 text-xs font-bold px-4 py-1.5 rounded-full transition-colors">Pending</button>
-          <button className="text-slate-500 hover:text-slate-800 text-xs font-bold px-4 py-1.5 rounded-full transition-colors">Confirmed</button>
+          <button className="text-slate-500 hover:text-slate-800 text-xs font-bold px-4 py-1.5 rounded-full transition-colors">{t.demo_labels.status_pending}</button>
+          <button className="text-slate-500 hover:text-slate-800 text-xs font-bold px-4 py-1.5 rounded-full transition-colors">{t.demo_labels.status_confirmed}</button>
         </div>
       </div>
 
@@ -366,10 +374,10 @@ const AppointmentsScene = () => (
       {[
         { time: '14:50', date: '2026-04-20', status: 'Confirmed', border: 'border-l-green-400', pill: 'bg-[#e2f5ec] text-[#148f77]' },
         { time: '14:30', date: '2026-04-20', status: 'Confirmed', border: 'border-l-green-400', pill: 'bg-[#e2f5ec] text-[#148f77]' },
-        { time: '13:50', date: '2026-04-20', status: 'Pending', border: 'border-l-orange-400', pill: 'bg-orange-100 text-orange-600' },
-        { time: '12:50', date: '2026-04-20', status: 'Pending', border: 'border-l-orange-400', pill: 'bg-orange-100 text-orange-600' },
-        { time: '13:30', date: '2026-04-20', status: 'Confirmed', border: 'border-l-green-400', pill: 'bg-[#e2f5ec] text-[#148f77]' },
-        { time: '13:10', date: '2026-04-14', status: 'Annulé', border: 'border-l-red-400', pill: 'bg-red-100 text-red-600' },
+        { time: '13:50', date: '2026-04-20', status: t.demo_labels.status_pending, border: 'border-l-orange-400', pill: 'bg-orange-100 text-orange-600' },
+        { time: '12:50', date: '2026-04-20', status: t.demo_labels.status_pending, border: 'border-l-orange-400', pill: 'bg-orange-100 text-orange-600' },
+        { time: '13:30', date: '2026-04-20', status: t.demo_labels.status_confirmed, border: 'border-l-green-400', pill: 'bg-[#e2f5ec] text-[#148f77]' },
+        { time: '13:10', date: '2026-04-14', status: t.demo_labels.status_cancelled, border: 'border-l-red-400', pill: 'bg-red-100 text-red-600' },
       ].map((apt, i) => (
         <motion.div initial={{x:-10, opacity:0}} animate={{x:0, opacity:1}} transition={{delay: i*0.05}} key={i} 
           className={cn("bg-white rounded-xl shadow-sm border border-slate-100 border-l-[6px] p-3 flex items-center justify-between", apt.border)}
@@ -391,19 +399,22 @@ const AppointmentsScene = () => (
     </div>
   </div>
 );
+};
 
 // SCENE 3: CREATE FORM
-const CreateFormScene = () => (
+const CreateFormScene = () => {
+  const { t } = useTranslation();
+  return (
   <div className="flex flex-col h-full gap-4">
     <div className="bg-white p-4 rounded-xl border border-slate-100 shadow-sm top-0 z-10 flex items-center gap-2">
-      <h2 className="text-xl font-black text-[#148f77]">Create Form</h2>
+      <h2 className="text-xl font-black text-[#148f77]">{t.demo_labels.create_form}</h2>
     </div>
     
     <div className="flex-1 flex flex-col md:flex-row gap-4 h-full overflow-y-auto md:overflow-y-hidden">
       {/* Left Column: Identity & Advanced */}
       <div className="w-full md:w-1/3 flex flex-col gap-4 overflow-y-visible md:overflow-y-auto pr-1 custom-scrollbar shrink-0">
         <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-5">
-          <h3 className="font-bold text-[#148f77] flex items-center gap-2 mb-4"><span className="text-[#148f77]">🌐</span> Identity</h3>
+          <h3 className="font-bold text-[#148f77] flex items-center gap-2 mb-4"><span className="text-[#148f77]">🌐</span> {t.demo_labels.identity}</h3>
           
           <div className="space-y-4">
             <div>
@@ -481,12 +492,15 @@ const CreateFormScene = () => (
     </div>
   </div>
 );
+};
 
 // SCENE 4: USERS & ACCESS
-const UsersScene = () => (
+const UsersScene = () => {
+  const { t } = useTranslation();
+  return (
   <div className="flex flex-col h-full gap-4">
     <div className="bg-white p-4 rounded-xl border border-slate-100 shadow-sm top-0 z-10 flex items-center gap-2">
-      <h2 className="text-xl font-black text-[#148f77]">Users & Access</h2>
+      <h2 className="text-xl font-black text-[#148f77]">{t.demo_labels.users}</h2>
     </div>
     
     <div className="flex-1 flex flex-col md:grid md:grid-cols-5 gap-4 overflow-y-auto pb-4 custom-scrollbar">
@@ -496,7 +510,7 @@ const UsersScene = () => (
         
         {/* Create User */}
         <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
-           <h3 className="font-black text-[#148f77] text-lg mb-4">Create User</h3>
+           <h3 className="font-black text-[#148f77] text-lg mb-4">{t.demo_labels.create_user}</h3>
            <div className="space-y-4">
              <div className="grid grid-cols-2 gap-3">
                <input type="text" placeholder="First Name" className="border border-slate-200 rounded-lg p-2.5 text-sm bg-white" />
@@ -524,16 +538,15 @@ const UsersScene = () => (
 
              <div className="border border-slate-200 rounded-xl p-4 bg-slate-50/50 space-y-4 mt-4">
                 <span className="text-xs font-black text-slate-800 block mb-2">Access Rights</span>
-                <div className="flex items-center gap-3"><div className="w-8 h-4 bg-blue-500 rounded-full relative"><div className="w-3 h-3 bg-white rounded-full absolute right-0.5 top-0.5"></div></div> <span className="text-xs font-bold text-blue-600">Dashboard</span></div>
-                <div className="flex items-center gap-3"><div className="w-8 h-4 bg-slate-200 rounded-full relative"><div className="w-3 h-3 bg-white rounded-full absolute left-0.5 top-0.5"></div></div> <span className="text-xs text-slate-400">Edit</span></div>
-                <div className="flex items-center gap-3"><div className="w-8 h-4 bg-slate-200 rounded-full relative"><div className="w-3 h-3 bg-white rounded-full absolute left-0.5 top-0.5"></div></div> <span className="text-xs text-slate-400">Delete</span></div>
+                <div className="flex items-center gap-3"><div className="w-8 h-4 bg-blue-500 rounded-full relative"><div className="w-3 h-3 bg-white rounded-full absolute right-0.5 top-0.5"></div></div> <span className="text-xs font-bold text-blue-600">{t.demo_labels.dashboard}</span></div>
+                <div className="flex items-center gap-3"><div className="w-8 h-4 bg-slate-200 rounded-full relative"><div className="w-3 h-3 bg-white rounded-full absolute left-0.5 top-0.5"></div></div> <span className="text-xs text-slate-400">{t.demo_labels.edit}</span></div>
+                <div className="flex items-center gap-3"><div className="w-8 h-4 bg-slate-200 rounded-full relative"><div className="w-3 h-3 bg-white rounded-full absolute left-0.5 top-0.5"></div></div> <span className="text-xs text-slate-400">{t.demo_labels.delete}</span></div>
                 <div className="flex items-center gap-3 pt-4 border-t border-slate-200"><div className="w-8 h-4 bg-slate-200 rounded-full relative"><div className="w-3 h-3 bg-white rounded-full absolute left-0.5 top-0.5"></div></div> <span className="text-xs font-bold text-[#148f77]">View Dashboard (Medical)</span></div>
              </div>
 
              <button className="w-full bg-[#148f77] text-white font-bold py-3 rounded-xl mt-2">Assign</button>
            </div>
         </div>
-
       </div>
 
       {/* Right Column (Tables) (approx 3/5 width) */}
@@ -590,13 +603,12 @@ const UsersScene = () => (
                    <span className="bg-[#148f77] text-white text-[9px] font-bold px-2 py-0.5 rounded flex items-center gap-1 shadow-sm"><Layout className="w-2 h-2"/> Dashboard</span>
                 </div>
                 <div className="text-right pr-2"><div className="bg-red-50 text-red-500 rounded p-1 w-fit ml-auto cursor-pointer flex items-center justify-center hover:bg-red-100"><Trash2 className="w-3 h-3"/></div></div>
-             </div>
-           </div>
+              </div>
+            </div>
+          </div>
         </div>
-
       </div>
     </div>
   </div>
-</div>
 );
-
+};

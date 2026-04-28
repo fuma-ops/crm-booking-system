@@ -28,7 +28,26 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     document.documentElement.lang = language;
   }, [language, isRTL]);
 
-  const t = translations[language] || translations.fr;
+  const t = React.useMemo(() => {
+    const base = translations.fr;
+    const current = translations[language] || {};
+    
+    // Simple deep merge for the main keys
+    const merge = (b: any, c: any) => {
+      const res = { ...b };
+      if (!c) return res;
+      Object.keys(c).forEach(key => {
+        if (c[key] && typeof c[key] === 'object' && !Array.isArray(c[key])) {
+          res[key] = { ...b[key], ...c[key] };
+        } else {
+          res[key] = c[key];
+        }
+      });
+      return res;
+    };
+    
+    return merge(base, current);
+  }, [language]);
 
   return (
     <LanguageContext.Provider value={{ language, setLanguage, t, isRTL }}>

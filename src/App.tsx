@@ -20,9 +20,6 @@ const LANGUAGES: { code: Language; name: string; flag: string }[] = [
   { code: 'fr', name: 'Français', flag: '🇫🇷' },
   { code: 'en', name: 'English', flag: '🇬🇧' },
   { code: 'ar', name: 'العربية', flag: '🇸🇦' },
-  { code: 'es', name: 'Español', flag: '🇪🇸' },
-  { code: 'pt', name: 'Português', flag: '🇵🇹' },
-  { code: 'de', name: 'Deutsch', flag: '🇩🇪' },
 ];
 
 const LanguageSwitcher = () => {
@@ -199,14 +196,16 @@ const PricingCard = ({ tier, price, features, isFeatured = false }: any) => {
   </div>
 )};
 
-const TestimonialCard = ({ name, role, text }: any) => (
+const TestimonialCard = ({ name, role, text, img }: any) => (
   <div className="p-8 bg-white rounded-3xl border border-slate-100 shadow-sm">
     <div className="flex items-center gap-2 text-orange-400 mb-4">
       {[1, 2, 3, 4, 5].map(i => <Star key={i} className="w-4 h-4 fill-current" />)}
     </div>
     <p className="text-slate-600 mb-6 italic text-sm">"{text}"</p>
     <div className="flex items-center gap-4">
-      <div className="w-10 h-10 rounded-full bg-slate-200" />
+      <div className="w-10 h-10 rounded-full overflow-hidden bg-slate-200">
+        <img src={img} alt={name} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+      </div>
       <div>
         <h4 className="font-bold text-sm">{name}</h4>
         <p className="text-[10px] text-slate-400 uppercase tracking-widest">{role}</p>
@@ -216,7 +215,7 @@ const TestimonialCard = ({ name, role, text }: any) => (
 );
 
 const LandingPage = () => {
-  const { t, isRTL } = useTranslation();
+  const { t, isRTL, language } = useTranslation();
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -241,7 +240,7 @@ const LandingPage = () => {
   };
 
   return (
-    <div className="relative min-h-screen bg-transparent text-slate-900 font-sans selection:bg-[#148f77]/20 selection:text-[#148f77]">
+    <div className="relative min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-[#148f77]/20 selection:text-[#148f77]">
       <Helmet>
         <title>CRM Booking System</title>
         <meta name="description" content="Production-ready medical CRM landing page with interactive demo and multi-language support." />
@@ -257,7 +256,7 @@ const LandingPage = () => {
           <motion.div 
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="inline-flex items-center px-4 py-2 bg-slate-50 rounded-full border border-slate-200 shadow-sm mb-8 text-sm font-bold text-slate-600"
+            className="relative z-10 inline-flex items-center px-4 py-2 bg-slate-50 rounded-full border border-slate-200 shadow-sm mb-8 text-sm font-bold text-slate-600"
           >
              {t.hero.badge}
           </motion.div>
@@ -309,7 +308,17 @@ const LandingPage = () => {
 
         {/* Features Grid */}
         <section id="features" className="w-full bg-white/70 backdrop-blur-xl rounded-[3rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white/50 py-16 md:py-24 lg:py-[100px] px-6 md:px-10 max-w-7xl mx-auto relative overflow-hidden">
-          <div className="text-center mb-20">
+          {/* Decorative background image */}
+          <div className="absolute top-0 right-0 w-1/3 h-full opacity-5 pointer-events-none">
+            <img 
+              src="https://images.unsplash.com/photo-1504813184591-01572f98c85f?auto=format&fit=crop&q=80&w=1000" 
+              alt="Medical tech" 
+              className="w-full h-full object-cover"
+              referrerPolicy="no-referrer"
+            />
+          </div>
+          
+          <div className="text-center mb-20 relative z-10">
             <h2 className="text-4xl lg:text-5xl font-black tracking-tight mb-4">{t.features.section_title}</h2>
             <div className="w-20 h-2 bg-[#148f77] mx-auto rounded-full" />
           </div>
@@ -329,7 +338,9 @@ const LandingPage = () => {
             <h2 className="text-4xl lg:text-5xl font-black tracking-tight mb-4">{t.demo.section_title}</h2>
             <p className="text-slate-500 max-w-2xl mx-auto">{t.demo.description}</p>
           </div>
-          <ClinicDemo />
+          <div dir="ltr">
+            <ClinicDemo />
+          </div>
           <div className="mt-12">
             <LaunchLiveDemo />
           </div>
@@ -344,7 +355,7 @@ const LandingPage = () => {
                viewport={{ once: true }}
                className="text-4xl font-black mb-4"
              >
-               Simple, Transparent Pricing
+               {t.pricing.section_title}
              </motion.h2>
              <motion.p 
                initial={{ opacity: 0, y: 20 }}
@@ -353,7 +364,7 @@ const LandingPage = () => {
                transition={{ delay: 0.1 }}
                className="text-slate-500 max-w-xl mx-auto"
              >
-               Choose the best plan for your clinic needs.
+               {t.pricing.section_subtitle}
              </motion.p>
           </div>
 
@@ -367,61 +378,35 @@ const LandingPage = () => {
                className="relative p-8 rounded-3xl flex flex-col h-full bg-white border-2 border-[#148f77] shadow-xl transition-all duration-300 hover:-translate-y-2 mt-4 md:mt-0"
              >
                <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-[#148f77] text-xs font-bold rounded-full text-white uppercase tracking-widest">
-                 Most Popular
+                 {t.pricing.badge_popular}
                </div>
                <div className="mb-8 text-center pt-4">
-                 <h3 className="text-xl font-bold mb-2 text-slate-800 uppercase tracking-widest">Standard Licence</h3>
+                 <h3 className="text-xl font-bold mb-2 text-slate-800 uppercase tracking-widest">{t.pricing.standard_title}</h3>
                  <div className="flex items-baseline justify-center gap-1">
                    <span className="text-5xl font-black text-[#148f77]">$300</span>
                  </div>
-                 <p className="text-sm font-bold text-slate-400 mt-2">One-time payment</p>
+                 <p className="text-sm font-bold text-slate-400 mt-2">{t.pricing.payment_one_time}</p>
                </div>
                
                <div className="flex-1 space-y-4 mb-8">
-                 <div className="flex items-start gap-3">
-                   <Check className="w-5 h-5 flex-shrink-0 text-[#148f77]" />
-                   <span className="text-slate-600 text-sm font-medium">Full system installed on your Google Drive</span>
-                 </div>
-                 <div className="flex items-start gap-3">
-                   <Check className="w-5 h-5 flex-shrink-0 text-[#148f77]" />
-                   <span className="text-slate-600 text-sm">Connected to your Google Sheets</span>
-                 </div>
-                 <div className="flex items-start gap-3">
-                   <Check className="w-5 h-5 flex-shrink-0 text-[#148f77]" />
-                   <span className="text-slate-600 text-sm">Custom form builder (unlimited forms)</span>
-                 </div>
-                 <div className="flex items-start gap-3">
-                   <Check className="w-5 h-5 flex-shrink-0 text-[#148f77]" />
-                   <span className="text-slate-600 text-sm">Booking system + Google Calendar sync</span>
-                 </div>
-                 <div className="flex items-start gap-3">
-                   <Check className="w-5 h-5 flex-shrink-0 text-[#148f77]" />
-                   <span className="text-slate-600 text-sm">Patient CRM with PDF export</span>
-                 </div>
-                 <div className="flex items-start gap-3">
-                   <Check className="w-5 h-5 flex-shrink-0 text-[#148f77]" />
-                   <span className="text-slate-600 text-sm">Multi-user access management</span>
-                 </div>
-                 <div className="flex items-start gap-3">
-                   <Check className="w-5 h-5 flex-shrink-0 text-[#148f77]" />
-                   <span className="text-slate-600 text-sm">Multilingual email notifications</span>
-                 </div>
-                 <div className="flex items-start gap-3">
-                   <Check className="w-5 h-5 flex-shrink-0 text-[#148f77]" />
-                   <span className="text-slate-600 text-sm">1 month support included</span>
-                 </div>
+                 {t.pricing.features_standard.map((feature: string, idx: number) => (
+                   <div key={idx} className="flex items-start gap-3">
+                     <Check className="w-5 h-5 flex-shrink-0 text-[#148f77]" />
+                     <span className="text-slate-600 text-sm font-medium">{feature}</span>
+                   </div>
+                 ))}
                  <div className="flex items-start gap-3 opacity-50 grayscale">
-                   <X className="w-5 h-5 flex-shrink-0 text-slate-400" />
-                   <span className="text-slate-600 text-sm line-through">Custom workflow configuration</span>
-                 </div>
-                 <div className="flex items-start gap-3 opacity-50 grayscale">
-                   <X className="w-5 h-5 flex-shrink-0 text-slate-400" />
-                   <span className="text-slate-600 text-sm line-through">Onboarding training session</span>
-                 </div>
+                    <X className="w-5 h-5 flex-shrink-0 text-slate-400" />
+                    <span className="text-slate-600 text-sm line-through">Custom workflow configuration</span>
+                  </div>
+                  <div className="flex items-start gap-3 opacity-50 grayscale">
+                    <X className="w-5 h-5 flex-shrink-0 text-slate-400" />
+                    <span className="text-slate-600 text-sm line-through">Onboarding training session</span>
+                  </div>
                </div>
                
                <a href="#contact" className="w-full py-4 rounded-2xl font-bold transition-all bg-slate-100 hover:bg-slate-200 text-slate-800 active:scale-95 border border-slate-200 block text-center mt-auto">
-                 Get Standard
+                 {t.pricing.button_standard}
                </a>
              </motion.div>
 
@@ -434,53 +419,27 @@ const LandingPage = () => {
                className="relative p-8 rounded-3xl flex flex-col h-full bg-[#0d1b2a] text-white shadow-2xl transition-all duration-300 hover:-translate-y-2 lg:scale-105 z-10"
              >
                <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-[#148f77] text-xs font-bold rounded-full text-white uppercase tracking-widest shadow-lg shadow-[#148f77]/50">
-                 Full Service
+                 {t.pricing.badge_service}
                </div>
                <div className="mb-8 text-center pt-4">
-                 <h3 className="text-xl font-bold mb-2 text-[#148f77] uppercase tracking-widest">Pro Licence</h3>
+                 <h3 className="text-xl font-bold mb-2 text-[#148f77] uppercase tracking-widest">{t.pricing.pro_title}</h3>
                  <div className="flex items-baseline justify-center gap-1">
                    <span className="text-5xl font-black text-white">$500</span>
                  </div>
-                 <p className="text-sm font-bold text-slate-400 mt-2">One-time payment</p>
+                 <p className="text-sm font-bold text-slate-400 mt-2">{t.pricing.payment_one_time}</p>
                </div>
                
                <div className="flex-1 space-y-4 mb-8">
-                 <div className="flex items-start gap-3">
-                   <Check className="w-5 h-5 flex-shrink-0 text-[#148f77]" />
-                   <span className="text-slate-200 text-sm font-medium">Everything in Standard</span>
-                 </div>
-                 <div className="flex items-start gap-3">
-                   <Check className="w-5 h-5 flex-shrink-0 text-[#148f77]" />
-                   <span className="text-slate-300 text-sm font-medium">Full custom configuration based on your entity's workflow</span>
-                 </div>
-                 <div className="flex items-start gap-3">
-                   <Check className="w-5 h-5 flex-shrink-0 text-[#148f77]" />
-                   <span className="text-slate-300 text-sm">Starter forms created by our team</span>
-                 </div>
-                 <div className="flex items-start gap-3">
-                   <Check className="w-5 h-5 flex-shrink-0 text-[#148f77]" />
-                   <span className="text-slate-300 text-sm">Onboarding + training session</span>
-                 </div>
-                 <div className="flex items-start gap-3">
-                   <Check className="w-5 h-5 flex-shrink-0 text-[#148f77]" />
-                   <span className="text-slate-300 text-sm">3 months priority support</span>
-                 </div>
-                 <div className="flex items-start gap-3">
-                   <Check className="w-5 h-5 flex-shrink-0 text-[#148f77]" />
-                   <span className="text-slate-300 text-sm">Quiz mode with auto-correction</span>
-                 </div>
-                 <div className="flex items-start gap-3">
-                   <Check className="w-5 h-5 flex-shrink-0 text-[#148f77]" />
-                   <span className="text-slate-300 text-sm">Advanced slot management setup</span>
-                 </div>
-                 <div className="flex items-start gap-3">
-                   <Check className="w-5 h-5 flex-shrink-0 text-[#148f77]" />
-                   <span className="text-slate-300 text-sm">Dashboard KPIs customized</span>
-                 </div>
+                 {t.pricing.features_pro.map((feature: string, idx: number) => (
+                   <div key={idx} className="flex items-start gap-3">
+                     <Check className="w-5 h-5 flex-shrink-0 text-[#148f77]" />
+                     <span className="text-slate-300 text-sm font-medium">{feature}</span>
+                   </div>
+                 ))}
                </div>
                
                <a href="#contact" className="w-full py-4 rounded-2xl font-bold transition-all bg-[#148f77] hover:bg-[#117a65] text-white active:scale-95 shadow-[0_0_20px_rgba(20,143,119,0.3)] border border-[#148f77] block text-center mt-auto">
-                 Get Pro
+                 {t.pricing.button_pro}
                </a>
              </motion.div>
           </div>
@@ -493,8 +452,8 @@ const LandingPage = () => {
              className="mt-12 text-center"
           >
             <p className="text-sm font-bold text-slate-500 max-w-md mx-auto">
-              No monthly fees. No subscriptions. <br />
-              <span className="text-[#148f77]">You own your system — forever.</span>
+              {t.pricing.no_monthly_fees} <br />
+              <span className="text-[#148f77]">{t.pricing.own_forever}</span>
             </p>
           </motion.div>
         </section>
@@ -503,10 +462,30 @@ const LandingPage = () => {
         <section className="w-full bg-white/70 backdrop-blur-xl rounded-[3rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white/50 py-16 md:py-24 lg:py-[100px] px-6 md:px-10 max-w-7xl mx-auto relative overflow-hidden">
           <h2 className="text-4xl lg:text-5xl font-black mb-16 text-center">{t.testimonials.section_title}</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <TestimonialCard name="Dr. Sarah L." role="Dermatologist" text="CRM Booking System has completely transformed how we manage our queue and patient records." />
-            <TestimonialCard name="Jean M." role="Clinic Manager" text="The ROI is incredible. Zero monthly fees and complete control over our medical data." />
-            <TestimonialCard name="Dr. Antoine P." role="General Practitioner" text="The automated reminders reduced our no-show rate by 45%. Highly recommended." />
-            <TestimonialCard name="Maria V." role="Secretary" text="Simplest software I've used. Integration with Google Sheets is brilliant for reporting." />
+            <TestimonialCard 
+              name="Dr. Sarah L." 
+              role="Dermatologist" 
+              img="https://i.pravatar.cc/150?u=sarah"
+              text={language === 'ar' ? "لقد أحدث نظام حجز CRM ثورة كاملة في كيفية إدارتنا للطوابير وسجلات المرضى." : "CRM Booking System has completely transformed how we manage our queue and patient records."} 
+            />
+            <TestimonialCard 
+              name="Jean M." 
+              role="Clinic Manager" 
+              img="https://i.pravatar.cc/150?u=jean"
+              text={language === 'ar' ? "العائد على الاستثمار مذهل. صفر رسوم شهرية وتحكم كامل في بياناتنا الطبية." : "The ROI is incredible. Zero monthly fees and complete control over our medical data."} 
+            />
+            <TestimonialCard 
+              name="Dr. Antoine P." 
+              role="General Practitioner" 
+              img="https://i.pravatar.cc/150?u=antoine"
+              text={language === 'ar' ? "قللت التذكيرات الآلية معدل عدم الحضور بنسبة 45٪. موصى به بشدة." : "The automated reminders reduced our no-show rate by 45%. Highly recommended."} 
+            />
+            <TestimonialCard 
+              name="Maria V." 
+              role="Secretary" 
+              img="https://i.pravatar.cc/150?u=maria"
+              text={language === 'ar' ? "أبسط برنامج استخدمته على الإطلاق. التكامل مع جداول بيانات جوجل رائع للتقارير." : "Simplest software I've used. Integration with Google Sheets is brilliant for reporting."} 
+            />
           </div>
         </section>
 
@@ -519,7 +498,7 @@ const LandingPage = () => {
               viewport={{ once: true }}
               className="text-4xl lg:text-5xl font-black mb-4"
             >
-              Get Your System Today
+              {t.contact.section_title}
             </motion.h2>
             <motion.p 
               initial={{ opacity: 0, y: 20 }}
@@ -528,8 +507,7 @@ const LandingPage = () => {
               transition={{ delay: 0.1 }}
               className="text-slate-500 max-w-2xl mx-auto"
             >
-              Our team installs and configures everything on your Google Drive. 
-              You just focus on your clinic.
+              {t.contact.description}
             </motion.p>
           </div>
 
@@ -548,7 +526,7 @@ const LandingPage = () => {
                   <Mail className="w-6 h-6" />
                 </div>
                 <div>
-                  <h4 className="font-bold text-slate-800 mb-1">Email</h4>
+                  <h4 className="font-bold text-slate-800 mb-1">{t.contact.email_title}</h4>
                   <p className="text-slate-500 font-medium">fumaops@gmail.com</p>
                 </div>
               </motion.a>
@@ -567,11 +545,11 @@ const LandingPage = () => {
                   <MessageCircle className="w-6 h-6" />
                 </div>
                 <div className="flex-1">
-                  <h4 className="font-bold text-slate-800 mb-1">WhatsApp</h4>
-                  <p className="text-slate-500 font-medium">Chat with us</p>
+                  <h4 className="font-bold text-slate-800 mb-1">{t.contact.whatsapp_title}</h4>
+                  <p className="text-slate-500 font-medium">{t.contact.whatsapp_chat}</p>
                 </div>
                 <div className="px-4 py-2 bg-[#25D366] text-white text-xs font-bold rounded-xl shadow-sm shadow-[#25D366]/30">
-                  Message
+                  {t.contact.form_message}
                 </div>
               </motion.a>
 
@@ -589,11 +567,11 @@ const LandingPage = () => {
                   <MonitorPlay className="w-6 h-6" />
                 </div>
                 <div className="flex-1">
-                  <h4 className="font-bold text-slate-800 mb-1">Online Demo</h4>
-                  <p className="text-slate-500 font-medium">Test before you buy</p>
+                  <h4 className="font-bold text-slate-800 mb-1">{t.contact.demo_title}</h4>
+                  <p className="text-slate-500 font-medium">{t.contact.demo_test}</p>
                 </div>
                 <div className="px-4 py-2 bg-blue-600 text-white text-xs font-bold rounded-xl shadow-sm shadow-blue-600/30">
-                  Launch
+                  {t.pricing.button_start}
                 </div>
               </motion.a>
             </div>
@@ -611,51 +589,51 @@ const LandingPage = () => {
                    <div className="w-16 h-16 bg-[#148f77]/10 text-[#148f77] rounded-full flex items-center justify-center mb-6">
                      <Check className="w-8 h-8" />
                    </div>
-                   <h3 className="text-2xl font-black text-slate-800 mb-2">Message Sent!</h3>
-                   <p className="text-slate-500">We will get back to you within 24 hours.</p>
+                   <h3 className="text-2xl font-black text-slate-800 mb-2">{t.contact.success_title}</h3>
+                   <p className="text-slate-500">{t.contact.success_desc}</p>
                  </div>
               ) : (
                 <form className="space-y-5" onSubmit={handleContactSubmit}>
                   <div>
-                    <label className="block text-sm font-bold text-slate-700 mb-2">Full Name</label>
+                    <label className="block text-sm font-bold text-slate-700 mb-2">{t.contact.form_name}</label>
                     <input 
                       type="text" 
                       required
                       className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#148f77]/30 focus:border-[#148f77] transition-all"
-                      placeholder="Dr. Jane Doe"
+                      placeholder={t.contact.placeholder_name}
                     />
                   </div>
                   <div className="grid grid-cols-2 gap-5">
                     <div>
-                      <label className="block text-sm font-bold text-slate-700 mb-2">Email</label>
+                      <label className="block text-sm font-bold text-slate-700 mb-2">{t.contact.form_email}</label>
                       <input 
                         type="email" 
                         required
                         className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#148f77]/30 focus:border-[#148f77] transition-all"
-                        placeholder="jane@clinic.com"
+                        placeholder={t.contact.placeholder_email}
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-bold text-slate-700 mb-2">Phone / WhatsApp</label>
+                      <label className="block text-sm font-bold text-slate-700 mb-2">{t.contact.form_phone}</label>
                       <input 
                         type="text" 
                         required
                         className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#148f77]/30 focus:border-[#148f77] transition-all"
-                        placeholder="+1 (555) 000-0000"
+                        placeholder={t.contact.placeholder_phone}
                       />
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-bold text-slate-700 mb-2">Message</label>
+                    <label className="block text-sm font-bold text-slate-700 mb-2">{t.contact.form_message}</label>
                     <textarea 
                       rows={4}
                       required
                       className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#148f77]/30 focus:border-[#148f77] transition-all resize-none custom-scrollbar"
-                      placeholder="Tell us about your clinic..."
+                      placeholder={t.contact.placeholder_message}
                     ></textarea>
                   </div>
                   <button className="w-full py-4 mt-2 bg-[#148f77] hover:bg-[#117a65] text-white rounded-2xl font-bold text-lg transition-transform active:scale-95 shadow-[0_0_20px_rgba(20,143,119,0.3)]">
-                    Send Message
+                    {t.contact.form_submit}
                   </button>
                 </form>
               )}
@@ -680,29 +658,29 @@ const LandingPage = () => {
                     <h2 className="text-3xl font-black">{t.header.title}</h2>
                  </div>
                  <p className="text-slate-300 max-w-md text-lg leading-relaxed mb-8">
-                   Revolutionizing healthcare administration with an open-source spirit and cutting-edge web technology.
+                   {t.footer.about}
                  </p>
                  <div className="flex gap-4">
                     <a href="#contact" className="px-6 py-3 bg-white/10 hover:bg-white/20 text-white rounded-xl font-bold transition-colors border border-white/10 flex items-center gap-2">
-                       <Mail className="w-4 h-4"/> Contact Us
+                       <Mail className="w-4 h-4"/> {t.footer.contact_us}
                     </a>
                  </div>
               </div>
               <div>
-                 <h4 className="font-bold text-lg mb-6 flex items-center gap-2 tracking-wide uppercase text-slate-400">Product</h4>
+                 <h4 className="font-bold text-lg mb-6 flex items-center gap-2 tracking-wide uppercase text-slate-400">{t.footer.product}</h4>
                  <ul className="space-y-4 text-slate-300 font-medium">
-                    <li><a href="#features" className="hover:text-[#148f77] transition-colors flex items-center gap-2"><ArrowRight className="w-3 h-3"/> Features</a></li>
-                    <li><a href="#demo" className="hover:text-[#148f77] transition-colors flex items-center gap-2"><ArrowRight className="w-3 h-3"/> Live Demo</a></li>
-                    <li><a href="#" className="hover:text-[#148f77] transition-colors flex items-center gap-2"><ArrowRight className="w-3 h-3"/> Documentation</a></li>
-                    <li><Link to="/article" onClick={() => window.scrollTo(0, 0)} className="hover:text-[#148f77] transition-colors flex items-center gap-2"><ArrowRight className="w-3 h-3"/> Articles & Blog</Link></li>
+                    <li><a href="#features" className="hover:text-[#148f77] transition-colors flex items-center gap-2"><ArrowRight className="w-3 h-3"/> {t.header.nav_features}</a></li>
+                    <li><a href="#demo" className="hover:text-[#148f77] transition-colors flex items-center gap-2"><ArrowRight className="w-3 h-3"/> {t.header.nav_demo}</a></li>
+                    <li><a href="#" className="hover:text-[#148f77] transition-colors flex items-center gap-2"><ArrowRight className="w-3 h-3"/> {t.footer.documentation}</a></li>
+                    <li><Link to="/article" onClick={() => window.scrollTo(0, 0)} className="hover:text-[#148f77] transition-colors flex items-center gap-2"><ArrowRight className="w-3 h-3"/> {t.footer.articles}</Link></li>
                  </ul>
               </div>
               <div>
-                 <h4 className="font-bold text-lg mb-6 flex items-center gap-2 tracking-wide uppercase text-slate-400">Company</h4>
+                 <h4 className="font-bold text-lg mb-6 flex items-center gap-2 tracking-wide uppercase text-slate-400">{t.footer.company}</h4>
                  <ul className="space-y-4 text-slate-300 font-medium">
-                    <li><a href="#" className="hover:text-[#148f77] transition-colors flex items-center gap-2"><ArrowRight className="w-3 h-3"/> Privacy Policy</a></li>
-                    <li><a href="#" className="hover:text-[#148f77] transition-colors flex items-center gap-2"><ArrowRight className="w-3 h-3"/> Terms of Service</a></li>
-                    <li><a href="#contact" className="hover:text-[#148f77] transition-colors flex items-center gap-2"><ArrowRight className="w-3 h-3"/> Contact</a></li>
+                    <li><a href="#" className="hover:text-[#148f77] transition-colors flex items-center gap-2"><ArrowRight className="w-3 h-3"/> {t.footer.privacy}</a></li>
+                    <li><a href="#" className="hover:text-[#148f77] transition-colors flex items-center gap-2"><ArrowRight className="w-3 h-3"/> {t.footer.terms}</a></li>
+                    <li><a href="#contact" className="hover:text-[#148f77] transition-colors flex items-center gap-2"><ArrowRight className="w-3 h-3"/> {t.contact.section_title}</a></li>
                  </ul>
               </div>
            </div>
@@ -712,7 +690,7 @@ const LandingPage = () => {
                 <p className="text-slate-400 font-medium">
                   {t.footer.copyright}
                 </p>
-                <p className="text-sm text-slate-500 mt-1">All Rights Reserved. Created by the CRM Booking System Team.</p>
+                <p className="text-sm text-slate-500 mt-1">{t.footer.all_rights}</p>
               </div>
               <div className="flex gap-4">
                  <a href="#" className="w-10 h-10 rounded-full bg-slate-800/50 flex items-center justify-center hover:bg-[#148f77] hover:text-white transition-colors text-slate-400">
