@@ -6,6 +6,7 @@ import {
   MessageSquare, Layers, Lock, Play, Star,
   Calendar, Users, BarChart3, Mail, MessageCircle, MonitorPlay
 } from 'lucide-react';
+import { Helmet } from 'react-helmet-async';
 import { LanguageProvider, useTranslation } from './i18n/LanguageContext';
 import { ClinicDemo } from './components/ClinicDemo';
 import { LaunchLiveDemo } from './components/LaunchLiveDemo';
@@ -241,6 +242,10 @@ const LandingPage = () => {
 
   return (
     <div className="relative min-h-screen bg-transparent text-slate-900 font-sans selection:bg-[#148f77]/20 selection:text-[#148f77]">
+      <Helmet>
+        <title>SMRT CRM BOOKING SYSTEM</title>
+        <meta name="description" content="Production-ready medical CRM landing page with interactive demo and multi-language support." />
+      </Helmet>
       <FloatingCrosses />
       <motion.div className="fixed top-0 left-0 right-0 h-1.5 bg-[#148f77] origin-left z-[100]" style={{ scaleX }} />
       
