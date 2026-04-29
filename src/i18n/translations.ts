@@ -91,12 +91,14 @@ export const translations = {
       form_phone: "Téléphone / WhatsApp",
       form_message: "Message",
       form_submit: "Envoyer le message",
-      success_title: "Message envoyé !",
-      success_desc: "Nous vous répondrونrons sous 24 heures.",
+      success_title: "Merci pour votre message !",
+      success_desc: "Notre équipe vous contactera pour suivre la procédure d'installation et de paiement.",
       placeholder_name: "Dr. Jean Dupont",
       placeholder_email: "jean@clinique.com",
       placeholder_phone: "+33 6 00 00 00 00",
-      placeholder_message: "Dites-nous en plus sur votre clinique..."
+      placeholder_message: "Dites-nous en plus sur votre clinique...",
+      error_submit: "Une erreur s'est produite lors de l'envoi du formulaire. Veuillez réessayer.",
+      error_connection: "Une erreur s'est produite. Veuillez vérifier votre connexion et réessayer."
     },
     testimonials: {
       section_title: "Avis des utilisateurs"
@@ -224,12 +226,14 @@ export const translations = {
       form_phone: "Phone / WhatsApp",
       form_message: "Message",
       form_submit: "Send Message",
-      success_title: "Message Sent!",
-      success_desc: "We will get back to you within 24 hours.",
+      success_title: "Thank you for your message!",
+      success_desc: "Our team will contact you to follow up on the installation and payment process.",
       placeholder_name: "Dr. Jane Doe",
       placeholder_email: "jane@clinic.com",
       placeholder_phone: "+1 (555) 000-0000",
-      placeholder_message: "Tell us about your clinic..."
+      placeholder_message: "Tell us about your clinic...",
+      error_submit: "An error occurred while submitting the form. Please try again.",
+      error_connection: "An error occurred. Please check your connection and try again."
     },
     testimonials: { section_title: "User Reviews" },
     footer: { 
@@ -355,12 +359,14 @@ export const translations = {
       form_phone: "الهاتف / واتساب",
       form_message: "الرسالة",
       form_submit: "إرسال الرسالة",
-      success_title: "تم الإرسال بنجاح!",
-      success_desc: "سنرد عليك في غضون 24 ساعة.",
+      success_title: "شكراً لرسالتك!",
+      success_desc: "سيتواصل معك فريقنا لمتابعة إجراءات التثبيت والدفع.",
       placeholder_name: "د. أحمد علي",
       placeholder_email: "ahmed@clinic.com",
       placeholder_phone: "+966 50 000 0000",
-      placeholder_message: "أخبرنا عن عيادتك وكيف يمكننا مساعدتك..."
+      placeholder_message: "أخبرنا عن عيادتك وكيف يمكننا مساعدتك...",
+      error_submit: "حدث خطأ أثناء إرسال النموذج. يرجى المحاولة مرة أخرى.",
+      error_connection: "حدث خطأ. يرجى التحقق من اتصالك والمحاولة مرة أخرى."
     },
     footer: { 
       copyright: "&copy; 2026 CRM Booking System. تم التطوير بكل حب ❤️ لمجتمع الرعاية الصحية.",

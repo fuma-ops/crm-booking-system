@@ -242,6 +242,9 @@ const LandingPage = () => {
     try {
       const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
+        headers: {
+          "Accept": "application/json"
+        },
         body: formData
       });
       
@@ -253,11 +256,11 @@ const LandingPage = () => {
         (e.target as HTMLFormElement).reset();
       } else {
         console.error("Form submission error:", data);
-        alert("An error occurred while submitting the form. Please try again.");
+        alert(t.contact.error_submit || "An error occurred while submitting the form. Please try again.");
       }
     } catch (error) {
       console.error("Form submission error:", error);
-      alert("An error occurred. Please check your connection and try again.");
+      alert(t.contact.error_connection || "An error occurred. Please check your connection and try again.");
     }
   };
 
