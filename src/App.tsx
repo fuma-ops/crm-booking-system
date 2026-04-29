@@ -233,10 +233,32 @@ const LandingPage = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleContactSubmit = (e: React.FormEvent) => {
+  const handleContactSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsSubmitted(true);
-    setTimeout(() => setIsSubmitted(false), 5000);
+    
+    const formData = new FormData(e.currentTarget);
+    formData.append("access_key", "2732e118-35a2-4728-a075-f769ce3bb029");
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData
+      });
+      
+      const data = await response.json();
+      
+      if (data.success) {
+        setIsSubmitted(true);
+        setTimeout(() => setIsSubmitted(false), 5000);
+        (e.target as HTMLFormElement).reset();
+      } else {
+        console.error("Form submission error:", data);
+        alert("An error occurred while submitting the form. Please try again.");
+      }
+    } catch (error) {
+      console.error("Form submission error:", error);
+      alert("An error occurred. Please check your connection and try again.");
+    }
   };
 
   return (
@@ -598,6 +620,7 @@ const LandingPage = () => {
                     <label className="block text-sm font-bold text-slate-700 mb-2">{t.contact.form_name}</label>
                     <input 
                       type="text" 
+                      name="name"
                       required
                       className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#148f77]/30 focus:border-[#148f77] transition-all"
                       placeholder={t.contact.placeholder_name}
@@ -608,6 +631,7 @@ const LandingPage = () => {
                       <label className="block text-sm font-bold text-slate-700 mb-2">{t.contact.form_email}</label>
                       <input 
                         type="email" 
+                        name="email"
                         required
                         className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#148f77]/30 focus:border-[#148f77] transition-all"
                         placeholder={t.contact.placeholder_email}
@@ -617,6 +641,7 @@ const LandingPage = () => {
                       <label className="block text-sm font-bold text-slate-700 mb-2">{t.contact.form_phone}</label>
                       <input 
                         type="text" 
+                        name="phone"
                         required
                         className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#148f77]/30 focus:border-[#148f77] transition-all"
                         placeholder={t.contact.placeholder_phone}
@@ -627,6 +652,7 @@ const LandingPage = () => {
                     <label className="block text-sm font-bold text-slate-700 mb-2">{t.contact.form_message}</label>
                     <textarea 
                       rows={4}
+                      name="message"
                       required
                       className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#148f77]/30 focus:border-[#148f77] transition-all resize-none custom-scrollbar"
                       placeholder={t.contact.placeholder_message}
