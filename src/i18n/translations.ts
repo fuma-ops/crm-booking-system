@@ -19,7 +19,9 @@ export const translations = {
       cta_secondary: "Voir la vidéo (2 min)",
       trust_1: "0€/mois à jamais",
       trust_2: "100% privé sur vos sheets",
-      trust_3: "3 langues incluses"
+      trust_3: "6 langues incluses",
+      trust_4: "Générateur de formulaires avancé",
+      demo_credentials: "🔑 Identifiants Démo : demo@clinic.com / admin123"
     },
     features: {
       section_title: "Tout ce dont vous avez besoin",
@@ -157,7 +159,9 @@ export const translations = {
       cta_secondary: "Watch video (2 min)",
       trust_1: "€0/month forever",
       trust_2: "100% private on your sheets",
-      trust_3: "3 languages included"
+      trust_3: "6 languages included",
+      trust_4: "Advanced Forms Builder",
+      demo_credentials: "🔑 Demo Login: demo@clinic.com / admin123"
     },
     features: { 
       section_title: "Everything you need",
@@ -290,7 +294,9 @@ export const translations = {
       cta_secondary: "شاهد الفيديو (دقيقتان)",
       trust_1: "0 يورو للأبد",
       trust_2: "خصوصية تامة لبياناتك",
-      trust_3: "متوفر بـ 3 لغات"
+      trust_3: "متوفر بـ 6 لغات",
+      trust_4: "منشئ نماذج متقدم",
+      demo_credentials: "🔑 بيانات الدخول: demo@clinic.com / admin123"
     },
     features: { 
       section_title: "كل ما تحتاجه لإدارة عيادتك باحترافية",

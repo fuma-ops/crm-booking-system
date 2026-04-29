@@ -220,6 +220,7 @@ const LandingPage = () => {
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const [showDemoNotification, setShowDemoNotification] = useState(false);
 
   React.useEffect(() => {
     const handleScroll = () => {
@@ -277,7 +278,7 @@ const LandingPage = () => {
 
       <main className="relative z-10 pt-24 pb-12 px-4 sm:px-6 flex flex-col gap-12 lg:gap-24">
         {/* Hero Section */}
-        <section className="w-full bg-white/70 backdrop-blur-xl rounded-[3rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white/50 py-16 md:py-24 lg:py-[100px] px-6 md:px-10 text-center max-w-7xl mx-auto relative overflow-hidden">
+        <section className="w-full bg-white/70 backdrop-blur-xl rounded-[2rem] sm:rounded-[3rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white/50 py-14 sm:py-16 md:py-24 lg:py-[100px] px-5 sm:px-6 md:px-10 text-center max-w-7xl mx-auto relative overflow-hidden">
           <motion.div 
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -289,10 +290,10 @@ const LandingPage = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight mb-8 leading-[0.9]"
+            className="text-[2.75rem] leading-[1.2] sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight mb-6 md:mb-8 md:leading-[1.1]"
           >
-            {t.hero.title} <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#148f77] to-blue-600">
+            {t.hero.title} <br className="hidden md:block" />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#148f77] to-blue-600 block sm:inline mt-2 sm:mt-0 pb-2">
               {t.hero.title_accent}
             </span>
           </motion.h1>
@@ -300,7 +301,7 @@ const LandingPage = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-slate-600 text-lg md:text-xl max-w-3xl mx-auto mb-12 leading-relaxed"
+            className="text-slate-600 text-base sm:text-lg md:text-xl max-w-3xl mx-auto mb-10 md:mb-12 leading-relaxed px-2"
           >
             {t.hero.description}
           </motion.p>
@@ -308,40 +309,73 @@ const LandingPage = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16"
+            className="flex flex-col items-center justify-center gap-4 mb-4"
           >
-            <a href="https://fuma-ops.github.io/smartform-builder-catalogue/app.html" target="_blank" rel="noopener noreferrer" className="group w-full sm:w-auto px-10 py-5 bg-[#148f77] text-white rounded-2xl font-black text-lg hover:bg-[#117a65] transition-all shadow-2xl shadow-[#148f77]/30 active:scale-95 flex items-center justify-center gap-3">
-              {t.hero.cta_primary}
-            </a>
-            <a href="https://youtu.be/zjOgwPbxJMQ?si=0JhLNQYbu-7ZBgCr" target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto px-10 py-5 bg-white text-slate-900 border-2 border-slate-200 rounded-2xl font-bold text-lg hover:bg-slate-50 transition-all flex items-center justify-center gap-3 cursor-pointer">
-              {t.hero.cta_secondary}
-            </a>
+            <div className="flex flex-col xl:flex-row items-center justify-center gap-4 w-full sm:w-[80%] xl:w-auto mx-auto">
+              <button onClick={() => setShowDemoNotification(!showDemoNotification)} className="group w-full xl:w-auto px-8 xl:px-10 py-4 xl:py-5 bg-[#148f77] text-white rounded-2xl font-black text-lg hover:bg-[#117a65] transition-all shadow-2xl shadow-[#148f77]/30 active:scale-95 flex items-center justify-center gap-3">
+                {t.hero.cta_primary}
+              </button>
+              <a href="https://youtu.be/zjOgwPbxJMQ?si=0JhLNQYbu-7ZBgCr" target="_blank" rel="noopener noreferrer" className="w-full xl:w-auto px-8 xl:px-10 py-4 xl:py-5 bg-white text-slate-900 border-2 border-slate-200 rounded-2xl font-bold text-lg hover:bg-slate-50 transition-all flex items-center justify-center gap-3 cursor-pointer">
+                {t.hero.cta_secondary}
+              </a>
+            </div>
           </motion.div>
 
-          <div className="grid grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto">
+          <AnimatePresence>
+            {showDemoNotification && (
+              <motion.div
+                initial={{ opacity: 0, height: 0, scale: 0.95 }}
+                animate={{ opacity: 1, height: 'auto', scale: 1 }}
+                exit={{ opacity: 0, height: 0, scale: 0.95 }}
+                className="overflow-hidden w-full max-w-md mx-auto mb-12 origin-top"
+              >
+                <div className="p-6 md:p-8 bg-white border border-slate-200 rounded-[2rem] shadow-xl flex flex-col gap-6 mt-4 relative z-20">
+                  <div className="text-center">
+                    <h3 className="text-2xl font-black text-slate-800 mb-2">Demo</h3>
+                    <p className="text-slate-500 text-sm">
+                      Log in below to explore the dashboard.
+                    </p>
+                    <p className="text-xs text-slate-400 mt-4 leading-relaxed bg-slate-50 p-3 rounded-xl border border-slate-100">
+                      Note: User Access Management is disabled in this public test environment for security reasons.
+                    </p>
+                  </div>
+                  
+                  <div className="flex flex-col gap-3">
+                    <div className="p-4 border border-slate-200 rounded-2xl bg-slate-50 relative flex flex-col items-center">
+                      <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">LOGIN ID</p>
+                      <p className="font-bold text-lg text-[#148f77] font-mono">demo</p>
+                    </div>
+                    
+                    <div className="p-4 border border-slate-200 rounded-2xl bg-slate-50 relative flex flex-col items-center">
+                      <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">PASSWORD</p>
+                      <p className="font-bold text-lg text-[#148f77] font-mono">demo2026</p>
+                    </div>
+                  </div>
+                  
+                  <a href="https://fuma-ops.github.io/smartform-builder-catalogue/app.html" target="_blank" rel="noopener noreferrer" className="w-full py-4 bg-[#148f77] text-white rounded-xl font-bold text-lg hover:bg-[#117a65] transition-all shadow-lg shadow-[#148f77]/20 flex items-center justify-center gap-2 mt-2">
+                    Launch Live Demo <ArrowRight className="w-5 h-5" />
+                  </a>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 max-w-5xl mx-auto">
              {[
                { text: t.hero.trust_1 },
                { text: t.hero.trust_2 },
-               { text: t.hero.trust_3 }
+               { text: t.hero.trust_3 },
+               { text: t.hero.trust_4 }
              ].map((item, idx) => (
-                <div key={idx} className="flex flex-col items-center justify-center gap-3 p-4 bg-slate-50 rounded-2xl">
-                  <span className="text-xs font-black uppercase tracking-widest text-[#148f77]">{item.text}</span>
+                <div key={idx} className="flex flex-col items-center justify-center p-4 bg-slate-50 rounded-2xl text-center h-full border border-slate-100/50">
+                  <span className="text-[10px] md:text-[11px] font-black uppercase tracking-widest text-[#148f77] leading-tight">{item.text}</span>
                 </div>
              ))}
           </div>
         </section>
 
         {/* Features Grid */}
-        <section id="features" className="w-full bg-white/70 backdrop-blur-xl rounded-[3rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white/50 py-16 md:py-24 lg:py-[100px] px-6 md:px-10 max-w-7xl mx-auto relative overflow-hidden">
-          {/* Decorative background image */}
-          <div className="absolute top-0 right-0 w-1/3 h-full opacity-5 pointer-events-none">
-            <img 
-              src="https://images.unsplash.com/photo-1504813184591-01572f98c85f?auto=format&fit=crop&q=80&w=1000" 
-              alt="Medical tech" 
-              className="w-full h-full object-cover"
-              referrerPolicy="no-referrer"
-            />
-          </div>
+        <section id="features" className="w-full bg-white/70 backdrop-blur-xl rounded-[2rem] sm:rounded-[3rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white/50 py-14 sm:py-16 md:py-24 lg:py-[100px] px-5 sm:px-6 md:px-10 max-w-7xl mx-auto relative overflow-hidden">
           
           <div className="text-center mb-20 relative z-10">
             <h2 className="text-4xl lg:text-5xl font-black tracking-tight mb-4">{t.features.section_title}</h2>
@@ -358,7 +392,7 @@ const LandingPage = () => {
         </section>
 
         {/* Demo Section */}
-        <section id="demo" className="w-full bg-white/70 backdrop-blur-xl rounded-[3rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white/50 py-16 md:py-24 lg:py-[100px] px-4 md:px-10 max-w-7xl mx-auto relative overflow-hidden">
+        <section id="demo" className="w-full bg-white/70 backdrop-blur-xl rounded-[2rem] sm:rounded-[3rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white/50 py-14 sm:py-16 md:py-24 lg:py-[100px] px-4 md:px-10 max-w-7xl mx-auto relative overflow-hidden">
           <div className="text-center mb-16">
             <h2 className="text-4xl lg:text-5xl font-black tracking-tight mb-4">{t.demo.section_title}</h2>
             <p className="text-slate-500 max-w-2xl mx-auto">{t.demo.description}</p>
@@ -372,7 +406,7 @@ const LandingPage = () => {
         </section>
 
         {/* Pricing Section */}
-        <section id="pricing" className="w-full bg-white/70 backdrop-blur-xl rounded-[3rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white/50 py-16 md:py-24 lg:py-[100px] px-6 md:px-10 max-w-7xl mx-auto relative overflow-hidden">
+        <section id="pricing" className="w-full bg-white/70 backdrop-blur-xl rounded-[2rem] sm:rounded-[3rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white/50 py-14 sm:py-16 md:py-24 lg:py-[100px] px-5 sm:px-6 md:px-10 max-w-7xl mx-auto relative overflow-hidden">
           <div className="text-center mb-16">
              <motion.h2 
                initial={{ opacity: 0, y: 20 }}
@@ -484,7 +518,7 @@ const LandingPage = () => {
         </section>
 
         {/* Testimonials */}
-        <section className="w-full bg-white/70 backdrop-blur-xl rounded-[3rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white/50 py-16 md:py-24 lg:py-[100px] px-6 md:px-10 max-w-7xl mx-auto relative overflow-hidden">
+        <section className="w-full bg-white/70 backdrop-blur-xl rounded-[2rem] sm:rounded-[3rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white/50 py-14 sm:py-16 md:py-24 lg:py-[100px] px-5 sm:px-6 md:px-10 max-w-7xl mx-auto relative overflow-hidden">
           <h2 className="text-4xl lg:text-5xl font-black mb-16 text-center">{t.testimonials.section_title}</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             <TestimonialCard 
@@ -515,7 +549,7 @@ const LandingPage = () => {
         </section>
 
         {/* Contact Section */}
-        <section id="contact" className="w-full bg-white/70 backdrop-blur-xl rounded-[3rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white/50 py-16 md:py-24 lg:py-[100px] px-6 md:px-10 max-w-7xl mx-auto relative overflow-hidden">
+        <section id="contact" className="w-full bg-white/70 backdrop-blur-xl rounded-[2rem] sm:rounded-[3rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white/50 py-14 sm:py-16 md:py-24 lg:py-[100px] px-5 sm:px-6 md:px-10 max-w-7xl mx-auto relative overflow-hidden">
           <div className="text-center mb-16">
             <motion.h2 
               initial={{ opacity: 0, y: 20 }}
@@ -536,9 +570,9 @@ const LandingPage = () => {
             </motion.p>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-12 items-start max-w-5xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start max-w-5xl mx-auto">
             {/* Contact Options */}
-            <div className="space-y-6">
+            <div className="space-y-4 md:space-y-6">
               <motion.a 
                 href="mailto:fumaops@gmail.com"
                 initial={{ opacity: 0, x: -20 }}
