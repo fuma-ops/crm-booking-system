@@ -557,7 +557,7 @@ const LandingPage = () => {
               </motion.a>
 
               <motion.a 
-                href="https://wa.me/your-number"
+                href="https://wa.me/212698855901"
                 target="_blank"
                 rel="noopener noreferrer"
                 initial={{ opacity: 0, x: -20 }}
@@ -748,7 +748,7 @@ const LandingPage = () => {
             )}
           >
             <a 
-              href="https://wa.me/your-number" 
+              href="https://wa.me/212698855901" 
               target="_blank" 
               rel="noopener noreferrer"
               className="w-12 h-12 bg-[#25D366] text-white rounded-full flex items-center justify-center shadow-lg shadow-[#25D366]/30 hover:-translate-y-1 hover:shadow-xl transition-all"
